@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import { FC } from 'react';
 import './App.css';
+import AsaList from './components/AsaList';
+import Navbar from './components/Navbar';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
-function App() {
+const App: FC = (): any => {
+
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    uri: "https://analytics-api.herokuapp.com/analytics"
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+    <ApolloProvider client={client}>
+      <div className="App space-y-12 px-12 py-4">
+        <Navbar />
+        <p className='text-4xl mx-auto lg:w-[40vw] font-[500] text-center'>
+          List of Algorand Standard Assets on ASAlytics
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <AsaList />
+      </div>
+    </ApolloProvider>
+
   );
 }
 
